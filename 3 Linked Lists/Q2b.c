@@ -9,21 +9,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
-{
-    
-    List lst1, lst2, mergedList;
-    
-    lst1 = getList();
-    lst2 = getList();
-    
-    mergedList = merge(lst1,lst2);
-    
-    printf("Merged list:\n");
-    printList(&mergedList);
-    
-    freeList(&mergedList);
-    
-    return 0;
-}
-
+//int main()
+//{
+//    
+//    List lst1, lst2, mergedList;
+//    
+//    lst1 = getList();
+//    lst2 = getList();
+//    
+//    mergedList = merge(lst1,lst2);
+//    
+//    printf("Merged list:\n");
+//    printList(&mergedList);
+//    
+//    freeList(&mergedList);
+//    
+//    return 0;
+//}
+//

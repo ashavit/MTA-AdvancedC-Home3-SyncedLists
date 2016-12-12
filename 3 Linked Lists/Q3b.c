@@ -9,24 +9,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
-{
-    
-    List coordList;
-    int y;
-    unsigned int res;
-    
-    coordList = getCoordList();
-    
-    // get the (*,y) to look for
-    scanf("%d", &y);
-    
-    res = getYOccurrences(coordList, y);
-    
-    printf("The point (*,%d) appears %u times\n", y, res);
-    
-    freeList(&coordList);
-
-    return 0;
-}
-
+//int main()
+//{
+//    
+//    List coordList;
+//    int y;
+//    unsigned int res;
+//    
+//    coordList = getCoordList();
+//    
+//    // get the (*,y) to look for
+//    scanf("%d", &y);
+//    
+//    res = getYOccurrences(coordList, y);
+//    
+//    printf("The point (*,%d) appears %u times\n", y, res);
+//    
+//    freeList(&coordList);
+//
+//    return 0;
+//}
+//

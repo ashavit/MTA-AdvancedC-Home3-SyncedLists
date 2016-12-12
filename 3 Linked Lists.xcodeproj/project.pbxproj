@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C43B4BC71DFD38A0008433D1 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = C43B4BC61DFD38A0008433D1 /* main.c */; };
 		C43B4BCE1DFD3904008433D1 /* Q1.c in Sources */ = {isa = PBXBuildFile; fileRef = C43B4BCD1DFD3904008433D1 /* Q1.c */; };
 		C43B4BD01DFD393F008433D1 /* Q2a.c in Sources */ = {isa = PBXBuildFile; fileRef = C43B4BCF1DFD393F008433D1 /* Q2a.c */; };
 		C43B4BD21DFD3979008433D1 /* Q2b.c in Sources */ = {isa = PBXBuildFile; fileRef = C43B4BD11DFD3979008433D1 /* Q2b.c */; };
@@ -32,7 +31,6 @@
 
 /* Begin PBXFileReference section */
 		C43B4BC31DFD38A0008433D1 /* 3 Linked Lists */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "3 Linked Lists"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C43B4BC61DFD38A0008433D1 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		C43B4BCD1DFD3904008433D1 /* Q1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Q1.c; sourceTree = "<group>"; };
 		C43B4BCF1DFD393F008433D1 /* Q2a.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Q2a.c; sourceTree = "<group>"; };
 		C43B4BD11DFD3979008433D1 /* Q2b.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Q2b.c; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 		C43B4BC51DFD38A0008433D1 /* 3 Linked Lists */ = {
 			isa = PBXGroup;
 			children = (
-				C43B4BC61DFD38A0008433D1 /* main.c */,
 				C43B4BCD1DFD3904008433D1 /* Q1.c */,
 				C43B4BCF1DFD393F008433D1 /* Q2a.c */,
 				C43B4BD11DFD3979008433D1 /* Q2b.c */,
@@ -147,7 +144,6 @@
 				C43B4BD01DFD393F008433D1 /* Q2a.c in Sources */,
 				C43B4BD41DFD3996008433D1 /* Q3a.c in Sources */,
 				C43B4BD81DFD39DD008433D1 /* Q3c.c in Sources */,
-				C43B4BC71DFD38A0008433D1 /* main.c in Sources */,
 				C43B4BCE1DFD3904008433D1 /* Q1.c in Sources */,
 				C43B4BDC1DFD39FF008433D1 /* Q3e.c in Sources */,
 				C43B4BDA1DFD39F0008433D1 /* Q3d.c in Sources */,
@@ -278,6 +274,7 @@
 				C43B4BCC1DFD38A0008433D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

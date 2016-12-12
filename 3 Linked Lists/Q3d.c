@@ -1,4 +1,4 @@
-\//
+//
 //  Q3d.c
 //  3 Linked Lists
 //
@@ -9,28 +9,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
-{
-    
-    List coordList;
-    
-    int x, y;
-    int res;
-    
-    coordList = getCoordList();
-    
-    // get the (x,y) to insert
-    scanf("%d%d", &x, &y);
-    
-    res = insertCoordinate(&coordList, x, y);
-    
-    if(res == 0)
-        printf("The point (%d,%d) didn't appear\n",x,y);
-    else
-        printf("The point (%d,%d) already appeared\n",x,y);
-    
-    freeList(&coordList);
-    
-    return 0;
-}
-
+//int main()
+//{
+//    
+//    List coordList;
+//    
+//    int x, y;
+//    int res;
+//    
+//    coordList = getCoordList();
+//    
+//    // get the (x,y) to insert
+//    scanf("%d%d", &x, &y);
+//    
+//    res = insertCoordinate(&coordList, x, y);
+//    
+//    if(res == 0)
+//        printf("The point (%d,%d) didn't appear\n",x,y);
+//    else
+//        printf("The point (%d,%d) already appeared\n",x,y);
+//    
+//    freeList(&coordList);
+//    
+//    return 0;
+//}
+//
