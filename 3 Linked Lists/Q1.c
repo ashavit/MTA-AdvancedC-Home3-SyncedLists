@@ -196,12 +196,9 @@ void insertDataToEndList(List *lst, char ch)
 
 Student unScramble (List lst)
 {
-    Student result;
-    result.first = lst;
-    result.grade = 0;
-
     ListNode* prev = NULL;
     ListNode* curr = lst.head;
+    int grade = 0;
     char data;
     
     // Itterate to the end of the list
@@ -211,9 +208,9 @@ Student unScramble (List lst)
         data = *(curr->dataPtr);
         if (data >= '0' && data <= '9')
         {
-            result.grade = result.grade * 10 + data - '0';
+            grade = grade * 10 + data - '0';
             removeListNode(&lst, prev);
-            curr = prev->next;
+            curr = (prev ? prev->next : lst.head);
         }
         else
         {
@@ -222,5 +219,8 @@ Student unScramble (List lst)
         }
     }
     
+    Student result;
+    result.first = lst;
+    result.grade = grade;
     return result;
 }
