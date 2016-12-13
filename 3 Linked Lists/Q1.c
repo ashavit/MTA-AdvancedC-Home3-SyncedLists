@@ -140,17 +140,10 @@ void removeListNode(List *list, ListNode* prev)
     freeListNode(toRemove);
 }
 
-#pragma mark Helpers
+#pragma mark Public Helpers
 
 void makeEmptyList(List *lst)
 {
-    lst = (List*)malloc(sizeof(List));
-    if (!lst)
-    {
-        printf("Malloc error");
-        exit(MALLOC_ERROR_CODE);
-    }
-    
     lst->head = lst->tail = NULL;
 }
 
