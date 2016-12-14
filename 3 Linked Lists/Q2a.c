@@ -5,6 +5,7 @@
 //  Created by Amir Shavit on 11/12/2016.
 //  Copyright © 2016 Amir Shavit. All rights reserved.
 //
+// This program takes 2 descending sorted sigly synced lists od integers and merges them (itterativly)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,7 +65,7 @@ void printList(const List *lst)
         // Release each node until list if finished
         while (curr)
         {
-            printf("%c", *(curr->dataPtr));
+            printf("%d ", *(curr->dataPtr));
             curr = curr->next;
         }
     }
@@ -72,18 +73,18 @@ void printList(const List *lst)
     printf("\n");
 }
 
-ListNode* createListNode(int num)
+ListNode* createListNode(int data)
 {
     ListNode* node = (ListNode*)malloc(sizeof(ListNode));
-    int* ptrChr = (int*)malloc(sizeof(int));
-    if (!node || !ptrChr)
+    int* ptrData = (int*)malloc(sizeof(int));
+    if (!node || !ptrData)
     {
         printf("Malloc error");
         exit(MALLOC_ERROR_CODE);
     }
     
-    (*ptrChr) = num;
-    node->dataPtr = ptrChr;
+    (*ptrData) = data;
+    node->dataPtr = ptrData;
     node->next = NULL;
     return node;
 }
@@ -94,9 +95,9 @@ void freeListNode(ListNode *node)
     free(node);
 }
 
-void insertDataToEndList(List *lst, char ch)
+void insertDataToEndList(List *lst, int data)
 {
-    ListNode* node = createListNode(ch);
+    ListNode* node = createListNode(data);
     
     if (lst->head == NULL)
     {
@@ -106,6 +107,7 @@ void insertDataToEndList(List *lst, char ch)
     {
         lst->tail->next = node;
         lst->tail = node;
+        node->next = NULL;
     }
 }
 
@@ -150,7 +152,6 @@ List getList()
     }
     
     return res;
-
 }
 
 #pragma mark - Public Implementations
@@ -158,15 +159,38 @@ List getList()
 List merge(List lst1, List lst2)
 {
     List res;
-    int size, num, i;
-    
     makeEmptyList(&res);
-    
 
+    ListNode *p1 = lst1.head;
+    ListNode *p2 = lst2.head;
     
+    while (p1 && p2)
+    {
+        if (*(p1->dataPtr) > *(p2->dataPtr))
+        {
+            insertDataToEndList(&res, *(p1->dataPtr));
+            p1 = p1->next;
+        }
+        else
+        {
+            insertDataToEndList(&res, *(p2->dataPtr));
+            p2 = p2->next;
+        }
+    }
+    
+    // Fill with left overs from what ever list is still left
+    while (p1)
+    {
+        insertDataToEndList(&res, *(p1->dataPtr));
+        p1 = p1->next;
+    }
+
+    while (p2)
+    {
+        insertDataToEndList(&res, *(p2->dataPtr));
+        p2 = p2->next;
+    }
     
     return res;
 }
-
-
 
