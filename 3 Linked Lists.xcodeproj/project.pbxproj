@@ -16,6 +16,7 @@
 		C43B4BDA1DFD39F0008433D1 /* Q3d.c in Sources */ = {isa = PBXBuildFile; fileRef = C43B4BD91DFD39F0008433D1 /* Q3d.c */; };
 		C43B4BDC1DFD39FF008433D1 /* Q3e.c in Sources */ = {isa = PBXBuildFile; fileRef = C43B4BDB1DFD39FF008433D1 /* Q3e.c */; };
 		C457B6BD1E033CAF00143E71 /* Q2c.c in Sources */ = {isa = PBXBuildFile; fileRef = C457B6BB1E033CAE00143E71 /* Q2c.c */; };
+		C457B6BE1E033CAF00143E71 /* Q2d.c in Sources */ = {isa = PBXBuildFile; fileRef = C457B6BC1E033CAE00143E71 /* Q2d.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 		C43B4BD91DFD39F0008433D1 /* Q3d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Q3d.c; sourceTree = "<group>"; };
 		C43B4BDB1DFD39FF008433D1 /* Q3e.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Q3e.c; sourceTree = "<group>"; };
 		C457B6BB1E033CAE00143E71 /* Q2c.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Q2c.c; sourceTree = "<group>"; };
+		C457B6BC1E033CAE00143E71 /* Q2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Q2d.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				C43B4BCF1DFD393F008433D1 /* Q2a.c */,
 				C43B4BD11DFD3979008433D1 /* Q2b.c */,
 				C457B6BB1E033CAE00143E71 /* Q2c.c */,
+				C457B6BC1E033CAE00143E71 /* Q2d.c */,
 				C43B4BD31DFD3996008433D1 /* Q3a.c */,
 				C43B4BD51DFD39BE008433D1 /* Q3b.c */,
 				C43B4BD71DFD39DD008433D1 /* Q3c.c */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C457B6BD1E033CAF00143E71 /* Q2c.c in Sources */,
+				C457B6BE1E033CAF00143E71 /* Q2d.c in Sources */,
 				C43B4BD61DFD39BE008433D1 /* Q3b.c in Sources */,
 				C43B4BD01DFD393F008433D1 /* Q2a.c in Sources */,
 				C43B4BD41DFD3996008433D1 /* Q3a.c in Sources */,
