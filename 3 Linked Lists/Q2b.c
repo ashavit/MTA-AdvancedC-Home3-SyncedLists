@@ -189,10 +189,12 @@
 //    if (p1)
 //    {
 //        res.tail->next = p1;
+//        res.tail = lst1.tail;
 //    }
 //    else if (p2)
 //    {
 //        res.tail->next = p2;
+//        res.tail = lst2.tail;
 //    }
 //    
 //    return res;
