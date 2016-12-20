@@ -219,9 +219,7 @@ XListNode* getXlistNodeForData(List* list, int data)
         newCell = createXlistNode(data);
 
         if (!list->head) /*empty list */
-        {
-          addToEmptyXList(list, newCell);
-        }
+            addToEmptyXList(list, newCell);
         else
         {
             XListNode *prev = findPlaceToInsertX(list, data);

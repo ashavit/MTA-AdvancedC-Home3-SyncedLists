@@ -15,5 +15,9 @@ C:
 		gcc Q3c.c -o Q3c
 		./Q3c
 
+D:
+		gcc Q3d.c -o Q3d
+		./Q3d
+
 Clear:
 		rm *.o Q3a Q3b Q3c Q3d Q3e
