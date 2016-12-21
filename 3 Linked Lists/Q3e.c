@@ -52,6 +52,8 @@ List getCoordList();
 void freeList(List* list);
 void printList(List list);
 
+#pragma mark - Main
+
 int main()
 {
    List coordList;
@@ -322,7 +324,7 @@ YListNode* findYNodeByValue(YList *list, int data)
     return cur; /* null if not found */
 }
 
-#pragma mark Add
+#pragma mark Add Y
 
 YListNode* findPlaceToInsertY(YList *list, int data)
 {
