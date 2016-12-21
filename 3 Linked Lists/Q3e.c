@@ -45,6 +45,9 @@ typedef struct list
 
 #pragma mark - Declarations
 
+unsigned int getPairOccurrences(List coord_list, int x, int y);
+unsigned int getYOccurrences(List coord_list, int y);
+unsigned int getXOccurrences(List coord_list, int x);
 int insertCoordinate(List *coord_list, int x, int y);
 int removeCoordinate(List *coord_list, int x, int y);
 
@@ -299,7 +302,7 @@ static void deleteFromInsideXList(XListNode *prev)
 
 void deleteFromXList(List *list, XListNode *delNode)
 {
-    // Make sure there a node to delete 
+    // Make sure there a node to delete
     if (delNode)
     {
         XListNode *prev = delNode->prev;
@@ -506,6 +509,50 @@ List getCoordList()
 
     // printList(list);
     return list;
+}
+
+unsigned int getPairOccurrences(List coord_list, int x, int y)
+{
+    int res = 0;
+    XListNode* xNode = findXNodeByValue(&coord_list, x);
+    if (xNode)
+    {
+        YListNode* yNode = findYNodeByValue(&xNode->yList, y);
+        if (yNode)
+            res = yNode->occurrences;
+    }
+    return res;
+}
+
+unsigned int getYOccurrences(List coord_list, int y)
+{
+    int res = 0;
+    XListNode* xNode = coord_list.head;
+    while (xNode)
+    {
+        YListNode* yNode = findYNodeByValue(&xNode->yList, y);
+        if (yNode)
+            res += yNode->occurrences;
+
+        xNode = xNode->next;
+    }
+    return res;
+}
+
+unsigned int getXOccurrences(List coord_list, int x)
+{
+    int res = 0;
+    XListNode* xNode = findXNodeByValue(&coord_list, x);
+    if (xNode)
+    {
+        YListNode* yNode = xNode->yList.head;
+        while (yNode)
+        {
+            res += yNode->occurrences;
+            yNode = yNode->next;
+        }
+    }
+    return res;
 }
 
 int insertCoordinate(List *coord_list, int x, int y)
