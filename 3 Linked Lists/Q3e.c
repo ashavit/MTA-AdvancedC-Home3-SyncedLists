@@ -234,7 +234,6 @@ XListNode* addXCoordToList(List* list, int data)
       return newCell;
     else
     {
-        // XListNode *
         newCell = createXlistNode(data);
 
         if (!list->head) /*empty list */
@@ -257,8 +256,6 @@ XListNode* addXCoordToList(List* list, int data)
 }
 
 #pragma mark Delete X
-
-#pragma mark - Delete data
 
 static void deleteFromBeginningOfXList(List *list)
 {
@@ -391,7 +388,7 @@ YListNode* addYCoordToList(YList* list, int yCoord)
     }
 }
 
-#pragma mark Delete
+#pragma mark Delete Y
 
 static YListNode* findPlaceToDeleteY(YList *list, int yCoord, YListNode **delNode)
 {

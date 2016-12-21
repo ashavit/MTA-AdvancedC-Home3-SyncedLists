@@ -11,6 +11,11 @@
 
 #define MALLOC_ERROR -1
 
+#define REMOVE_COORD_RESULT_NOT_FOUND   1
+#define REMOVE_COORD_RESULT_MULTI_OCCUR 2
+#define REMOVE_COORD_RESULT_LAST_X      3
+#define REMOVE_COORD_RESULT_OTHER       0
+
 typedef struct _yListNode
 {
     int yCoord;
@@ -40,32 +45,36 @@ typedef struct list
 
 #pragma mark - Declarations
 
+unsigned int getPairOccurrences(List coord_list, int x, int y);
 unsigned int getYOccurrences(List coord_list, int y);
+unsigned int getXOccurrences(List coord_list, int x);
+int insertCoordinate(List *coord_list, int x, int y);
+int removeCoordinate(List *coord_list, int x, int y);
 
 List getCoordList();
 void freeList(List* list);
+void printList(List list);
 
 #pragma mark - Main
 
 int main()
 {
+    List coordList;
+    int y;
+    unsigned int res;
 
-   List coordList;
-   int y;
-   unsigned int res;
+    coordList = getCoordList();
 
-   coordList = getCoordList();
+    // get the (*,y) to look for
+    scanf("%d", &y);
 
-   // get the (*,y) to look for
-   scanf("%d", &y);
+    res = getYOccurrences(coordList, y);
 
-   res = getYOccurrences(coordList, y);
+    printf("The point (*,%d) appears %u times\n", y, res);
 
-   printf("The point (*,%d) appears %u times\n", y, res);
+    freeList(&coordList);
 
-   freeList(&coordList);
-
-   return 0;
+    return 0;
 }
 
 #pragma mark - Helpers
@@ -167,6 +176,8 @@ XListNode* findXNodeByValue(List *list, int data)
     return cur; /* null if not found */
 }
 
+#pragma mark Add X
+
 XListNode* findPlaceToInsertX(List *list, int data)
 {
     XListNode *cur = list->head;
@@ -207,7 +218,7 @@ void addInsideXList(XListNode *prev, XListNode *cell)
     cell->next->prev = cell;
 }
 
-XListNode* getXlistNodeForData(List* list, int data)
+XListNode* addXCoordToList(List* list, int data)
 {
     XListNode *newCell = findXNodeByValue(list, data);
 
@@ -215,7 +226,6 @@ XListNode* getXlistNodeForData(List* list, int data)
       return newCell;
     else
     {
-        // XListNode *
         newCell = createXlistNode(data);
 
         if (!list->head) /*empty list */
@@ -237,6 +247,61 @@ XListNode* getXlistNodeForData(List* list, int data)
     }
 }
 
+#pragma mark Delete X
+
+static void deleteFromBeginningOfXList(List *list)
+{
+    if (list->tail == list->head)
+    {
+        freeXlistNode(list->head);
+        list->tail = list->head = NULL;
+    }
+    else
+    {
+        list->head = list->head->next;
+        freeXlistNode(list->head->prev);
+        list->head->prev = NULL;
+    }
+}
+
+static void deleteFromEndOfXList(List *list)
+{
+    if (list->tail == list->head)
+    {
+        freeXlistNode(list->tail);
+        list->tail = list->head = NULL;
+    }
+    else
+    {
+        list->tail = list->tail->prev;
+        freeXlistNode(list->tail->next);
+        list->tail->next = NULL;
+    }
+}
+
+static void deleteFromInsideXList(XListNode *prev)
+{
+    XListNode *del = prev->next;
+    prev->next = del->next;
+    prev->next->prev = prev;
+    freeXlistNode(del);
+}
+
+void deleteFromXList(List *list, XListNode *delNode)
+{
+    // Make sure there a node to delete
+    if (delNode)
+    {
+        XListNode *prev = delNode->prev;
+        if (!prev)
+            deleteFromBeginningOfXList(list);
+        else if (prev == list->tail)
+            deleteFromEndOfXList(list);
+        else
+            deleteFromInsideXList(prev);
+    }
+}
+
 #pragma mark - Y Lists
 
 YListNode* findYNodeByValue(YList *list, int data)
@@ -248,6 +313,8 @@ YListNode* findYNodeByValue(YList *list, int data)
 
     return cur; /* null if not found */
 }
+
+#pragma mark Add Y
 
 YListNode* findPlaceToInsertY(YList *list, int data)
 {
@@ -285,20 +352,23 @@ void addInsideYList(YListNode *prev, YListNode *cell)
     prev->next = cell;
 }
 
-void addYCoordToList(YList* list, int data)
+YListNode* addYCoordToList(YList* list, int yCoord)
 {
-    YListNode *newCell = findYNodeByValue(list, data);
+    YListNode *newCell = findYNodeByValue(list, yCoord);
     if (newCell) /* Requesed x cell exists */
+    {
         newCell->occurrences++;
+        return newCell;
+    }
     else
     {
-        YListNode *newCell = createYlistNode(data);
+        YListNode *newCell = createYlistNode(yCoord);
 
         if (!list->head) /*empty list */
             addToEmptyYList(list, newCell);
         else
         {
-            YListNode *prev = findPlaceToInsertY(list, data);
+            YListNode *prev = findPlaceToInsertY(list, yCoord);
             if (!prev)
                 addToBeginningOfYList(list, newCell);
             else if (prev == list->tail)
@@ -306,6 +376,91 @@ void addYCoordToList(YList* list, int data)
             else
                 addInsideYList(prev, newCell);
         }
+        return newCell;
+    }
+}
+
+#pragma mark Delete Y
+
+static YListNode* findPlaceToDeleteY(YList *list, int yCoord, YListNode **delNode)
+{
+    YListNode *cur = list->head;
+    YListNode *prev = NULL;
+
+    while (cur && cur->yCoord != yCoord)
+    {
+      prev = cur;
+      cur = cur->next;
+    }
+
+    if (cur && cur->yCoord == yCoord)
+        *delNode = cur;
+    return prev;
+}
+
+static void deleteFromBeginningOfYList(YList *list)
+{
+    YListNode *del = list->head;
+    list->head = list->head->next;
+    if (list->head == NULL)
+        list->tail = NULL;
+
+    freeYlistNode(del);
+}
+
+static void deleteFromEndOfYList(YList *list, YListNode *prev)
+{
+    YListNode *del = prev->next;
+    list->tail = prev;
+    prev->next = NULL;
+    if (list->tail == NULL)
+        list->head = NULL;
+
+    freeYlistNode(del);
+}
+
+static void deleteFromInsideYList(YListNode *prev)
+{
+    YListNode *del = prev->next;
+    prev->next = del->next;
+    freeYlistNode(del);
+}
+
+int deleteFromYList(YList *list, int yCoord)
+{
+    YListNode *prev = NULL;
+
+    if (!list->head)
+    {
+        /*  List is empty */
+        return REMOVE_COORD_RESULT_NOT_FOUND;
+    }
+    else
+    {
+        YListNode *delNode = NULL;
+        prev = findPlaceToDeleteY(list, yCoord, &delNode);
+
+        if (prev == list->tail) /*not found*/
+        {
+            /* y coord not found  */
+            return REMOVE_COORD_RESULT_NOT_FOUND;
+        }
+
+        // Check if multiple occurrences
+        if (delNode && delNode->occurrences > 1)
+        {
+            delNode->occurrences--;
+            return REMOVE_COORD_RESULT_MULTI_OCCUR;
+        }
+
+        // Else regular deletion of node
+        if (!prev)
+            deleteFromBeginningOfYList(list);
+        else if (prev == list->tail)
+            deleteFromEndOfYList(list, prev);
+        else
+            deleteFromInsideYList(prev);
+        return REMOVE_COORD_RESULT_OTHER;
     }
 }
 
@@ -335,12 +490,25 @@ List getCoordList()
     {
         // get the (x,y)
         scanf("%d%d", &x, &y);
-        XListNode* xNode = getXlistNodeForData(&list, x);
+        XListNode* xNode = addXCoordToList(&list, x);
         addYCoordToList(&(xNode->yList), y);
     }
 
     // printList(list);
     return list;
+}
+
+unsigned int getPairOccurrences(List coord_list, int x, int y)
+{
+    int res = 0;
+    XListNode* xNode = findXNodeByValue(&coord_list, x);
+    if (xNode)
+    {
+        YListNode* yNode = findYNodeByValue(&xNode->yList, y);
+        if (yNode)
+            res = yNode->occurrences;
+    }
+    return res;
 }
 
 unsigned int getYOccurrences(List coord_list, int y)
@@ -355,5 +523,52 @@ unsigned int getYOccurrences(List coord_list, int y)
 
         xNode = xNode->next;
     }
+    return res;
+}
+
+unsigned int getXOccurrences(List coord_list, int x)
+{
+    int res = 0;
+    XListNode* xNode = findXNodeByValue(&coord_list, x);
+    if (xNode)
+    {
+        YListNode* yNode = xNode->yList.head;
+        while (yNode)
+        {
+            res += yNode->occurrences;
+            yNode = yNode->next;
+        }
+    }
+    return res;
+}
+
+int insertCoordinate(List *coord_list, int x, int y)
+{
+    XListNode* xNode = addXCoordToList(coord_list, x);
+    YListNode* yNode = addYCoordToList(&xNode->yList, y);
+    return (yNode->occurrences > 1 ? 1 : 0);
+}
+
+int removeCoordinate(List *coord_list, int x, int y)
+{
+    int res = REMOVE_COORD_RESULT_NOT_FOUND;
+
+    // Find X coord
+    XListNode *xNode = findXNodeByValue(coord_list, x);
+
+    if (xNode)
+    {
+        // Delete Y coord
+        res = deleteFromYList(&(xNode->yList), y);
+
+        // Make sure not to leave empty X coord
+        if (res == REMOVE_COORD_RESULT_OTHER &&
+            xNode->yList.head == NULL && xNode->yList.tail == NULL)
+        {
+            deleteFromXList(coord_list, xNode);
+            res = REMOVE_COORD_RESULT_LAST_X;
+        }
+    }
+
     return res;
 }
